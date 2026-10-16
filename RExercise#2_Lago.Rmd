@@ -1,0 +1,207 @@
+---
+title: "Exercise#2"
+author: "Eunice Mae Lago"
+date: "2026-09-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### PART A — Arithmetic Operations
+```{r}
+# TODO: Store 17 in a variable called a, and 5 in a variable called b
+# Then print the results of: a + b, a - b, a * b, a / b
+a <- 17
+b <- 5
+
+# TODO: Using the same a and b, compute and print a %% b and a %/% b
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)
+
+```
+
+```{r}
+# TODO: Using the same a and b, compute and print a %% b and a %/% b
+# a %% b = remainder of a / b
+# a %/% b = whole-number (integer) division
+print(a %% b)
+print(a %/% b)
+```
+```{r}
+# TODO: Print 2 raised to the power of 10 using the ^ operator
+print(2 ^ 10)
+```
+Question #1: Run 17 / 5, 17 %% 5, and 17 %/% 5 side by side. In your own words, explain how these three results relate to each other mathematically.
+Answer: Related because 17 divided 5 is 3 with a remainder of 2.
+
+Question #2: Predict the output of 10 %% 3 and 10 %/% 3 before running the code. Were you correct? If not, explain what you misunderstood.
+Answer: Yes, I understand that % gives the remainder, while %% gives the whole number result of the division.
+### PART B - Basic Data Types: typeof(), class(), and mode()
+```{r}
+x <- 42
+y <- 42L        # the L suffix forces an integer
+z <- "42"
+w <- TRUE
+v <- 3 + 2i     # complex number
+
+# TODO: Use typeof() to check the type of each of x, y, z, w, v
+print(typeof(x))
+print(typeof(y))
+print(typeof(z))
+print(typeof(w))
+print(typeof(v))
+```
+```{r}
+# TODO: Use class() to check the class of each of x, y, z, w, v
+print(class(x))
+print(class(y))
+print(class(z))
+print(class(w))
+print(class(v))
+```
+```{r}
+# TODO: Use mode() to check the class of each of x, y, z, w, v
+print(mode(x))
+print(mode(y))
+print(mode(z))
+print(mode(w))
+print(mode(v))
+```
+Question #3): x <- 42 and y <- 42L look almost identical, but typeof(x) and typeof(y) give different answers. Explain the difference in your own words.
+Answer: x <- 42 creates a double-precision decimal number (floating-point) by default, while y <- 42L explicitly creates an integer (whole number) because of the L suffix.
+
+Question #4: Is typeof() ever different from class() and from mode() for the same object? Look at your results above and explain any case where this happens (or, if you did not see one, explain what you would expect for a matrix or factor).
+Answer: Yes, they can be completely different for the same object because they measure different properties.
+
+### PART C - Type Conversion (20 min)
+```{r}
+num_string <- "123"
+# TODO: Convert num_string to a numeric value using as.numeric()
+# Then check its type with typeof(), class(), and mode()
+num_string <- "123"
+num_value <- as.numeric(num_string)
+
+typeof(num_value) # Returns: "double"
+class(num_value)  # Returns: "numeric"
+mode(num_value)   # Returns: "numeric"
+```
+```{r}
+# TODO: Convert the number 0 and the number 1 to logical using as.logical()
+# What do you get?
+as.logical(0) # Returns: FALSE
+as.logical(1) # Returns: TRUE
+```
+```{r}
+bad_string <- "hello123"
+# TODO: Try converting bad_string to numeric using as.numeric()
+# Run this chunk and observe the warning message and the result
+bad_string <- "hello123"
+as.numeric(bad_string)
+```
+Question #5: When you ran the conversion-fail chunk, R produced NA and a warning instead of stopping with an error.
+
+Why do you think R is designed to give a warning here rather than crashing the whole script?
+Answer: R is designed for data analysis, where you often process large datasets or columns. If a single bad row or cell fails to convert, crashing the entire script would stop your entire pipeline. By outputting an NA and issuing a warning, R allows the rest of your valid data to finish processing while alerting you that something went wrong.
+
+
+
+What are the risks of this behavior if you don’t read your warnings?
+Answer: If you don't read warnings, silent data loss can occur. Your script will keep running, but your calculations (like means or sums) might return NA or produce incorrect results because valid text data accidentally became missing data without your knowledge.
+
+
+
+
+Question #6: as.logical(0) and as.logical(1) convert to FALSE and TRUE.
+
+What do you think as.logical(2) and as.logical(-1)` will produce?
+Answer: Both as.logical(2) and as.logical(-1) will produce TRUE.
+
+
+
+Test it, then explain the rule R seems to be following.
+Answer: In R, the numeric value 0 is strictly FALSE, while any non-zero number (whether positive, negative, large, or small) evaluates to TRUE. Only a true mathematical zero is converted to false.
+
+### PART D - Strings, paste(), and paste0()
+```{r}
+first_name <- "Juan"
+last_name <- "Dela Cruz"
+
+# TODO: Print first_name and last_name using print() and/or cat()
+first_name <- "Juan"
+last_name <- "Dela Cruz"
+
+print(first_name)
+print(last_name)
+
+cat(first_name, last_name)
+```
+```{r}
+# TODO: Use paste() to combine first_name and last_name into a full name
+# TODO: Use paste0() to do the same, and compare the two results
+# Using paste()
+full_name_paste <- paste(first_name, last_name)
+# Result: "Juan Dela Cruz"
+
+# Using paste0()
+full_name_paste0 <- paste0(first_name, last_name)
+# Result: "JuanDela Cruz"
+```
+
+```{r}
+# TODO: Use paste() with the argument sep = "-" to join first_name and
+# last_name with a dash instead of a space
+paste(first_name, last_name, sep = "-")
+# Result: "Juan-Dela Cruz"
+```
+```{r}
+age <- 21
+# TODO: Use paste0() to build the sentence:
+# "Juan Dela Cruz is 21 years old." by combining full_name, age, and text
+full_name <- paste(first_name, last_name) # "Juan Dela Cruz"
+age <- 21
+
+paste0(full_name, " is ", age, " years old.")
+# Result: "Juan Dela Cruz is 21 years old."
+```
+Question #7: paste() and paste0() produced different results for the same two strings. Explain exactly why, referencing what each function does by default.
+
+Answer: paste() and paste0() differ because of their default separation behavior. By default, the paste() function inserts a single space (sep = " ") between the strings it combines, which separated your first and last names naturally. In contrast, paste0() is a shortcut designed to concatenate strings with absolutely zero space (sep = "") between them, welding your names together into a single word unless you manually type a space into your text strings.
+
+
+Question #8: In the strings-numbers chunk, you combined a character string with a numeric variable (age) using paste0() without first converting age to a string.
+
+Did this cause an error? Explain what paste0() does internally to make this work, and how it relates to the type conversions you practiced in Part C.
+
+Answer: No, this did not cause an error because paste0() automatically performs implicit coercion. When you feed a non-character variable like age (which is numeric) into a string-building function, R handles it internally by converting that number into a character string before joining them together. This relates directly to Part C because it is the exact same type of data conversion as manually running as.character(age), except R performs this specific type conversion silently in the background to prevent your script from breaking.
+
+### PART E - Critical Thinking Challenge
+```{r}
+# TODO: Predict, then test: what is the result of "5" + 5 in R?
+# Run it and read the error message carefully.
+#"5" + 5
+```
+```{r}
+# TODO: Now fix the code above so that "5" + 5 correctly evaluates to 10
+# using an appropriate conversion function.
+as.numeric("5") + 5
+# Result: 10
+```
+Question #9: Some programming languages automatically convert "5" + 5 into 10 without an error. R does not.
+
+Based on what you’ve learned about R’s data types in this lab, why do you think R requires an explicit conversion instead of guessing what the programmer meant?
+
+Answer: R strictly separates mathematical operations from text manipulation to prevent silent, unintended bugs. In data science, guessing whether a programmer wants to add numbers mathematically or concatenate text together can lead to massive calculation errors if data types are messy. By refusing to automatically convert "5" into a number during arithmetic, R forces the programmer to explicitly state their intent, ensuring high data accuracy and preventing hidden type-mismatch mistakes from ruining downstream statistical models.
+
+
+
+Question #10: Suppose a classmate writes a script that reads a column of “numbers” from a text file. The column looks numeric, but when they try sum() on it, R throws an error. Based on everything in this lab (types, typeof()/class()/mode(), conversion, warnings), write a short paragraph explaining what likely went wrong and the steps you’d take to diagnose and fix it.
+
+Answer: The classmate's column was likely imported as a character vector rather than a numeric vector, preventing math operations. To diagnose this, I would first check the vector's type by running class() or typeof() on the column to see if it returns "character". To fix it, I would wrap the column in as.numeric() to explicitly convert the text strings into real numbers. Finally, I would run the code and closely check for any Warning: NAs introduced by coercion messages, which would reveal if the column contained hidden text characters, symbols, or typos that broke the conversion and turned valid numbers into missing NA values.
+
+CONCLUSION
+In 3–4 sentences, summarize what you learned about how R handles different data types, and why understanding typeof()/class() and conversion functions matters before doing arithmetic or combining data.
+
+Answer: This lab demonstrates that R enforces strict boundaries between different data types to protect data integrity, requiring explicit commands for mathematical operations while allowing flexible implicit conversion during string combination. Tools like typeof() and class() are essential because they reveal how data is stored under the hood, allowing you to catch hidden character types that look like numbers but crash math functions. Mastering explicit conversion functions like as.numeric() and as.logical() ensures your datasets are completely ready for analysis. Ultimately, understanding these mechanics prevents silent errors and data loss from missing values (NA) when cleaning raw datasets.
