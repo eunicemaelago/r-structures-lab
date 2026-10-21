@@ -1,5 +1,5 @@
 ---
-title: "RExercise#3_Lago"
+title: R Lab: Data Structure - Vectors and List
 author: "Eunice Mae A. Lago"
 date: "`r Sys.Date()`"
 output: html_document
