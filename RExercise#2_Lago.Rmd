@@ -1,5 +1,5 @@
 ---
-title: "Exercise#2"
+title: "R Lab: Arithmetic Operations and Basic Data Types"
 author: "Eunice Mae Lago"
 date: "2026-09-30"
 output: html_document
