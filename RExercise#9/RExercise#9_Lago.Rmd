@@ -1,0 +1,102 @@
+---
+title: 'R Lab: Basic Operations of R Programming'
+author: "Eunice Mae A. Lago"
+date: "2026-11-07"
+output: html_document
+---
+
+### Part A — Creating, Exporting, and Importing Data
+```{r}
+# 1a. Create vectors and write data frame to shoesize.csv
+S_Size <- c(6.5, 9.0, 8.5, 8.5, 10.5, 7.0, 9.5, 9.0, 13.0, 7.5, 10.5, 8.5, 12.0, 10.5,
+            13.0, 11.5, 8.5, 5.0, 10.0, 6.5, 7.5, 8.5, 10.5, 8.5, 10.5, 11.0, 9.0, 13.0)
+Height <- c(66.0, 68.0, 64.5, 65.0, 70.0, 64.0, 70.0, 71.0, 72.0, 64.0, 74.5, 67.0, 71.0, 71.0,
+            77.0, 72.0, 59.0, 62.0, 72.0, 66.0, 64.0, 67.0, 73.0, 69.0, 72.0, 70.0, 69.0, 70.0)
+Gender <- c("F", "F", "F", "F", "M", "F", "F", "F", "M", "F", "M", "F", "M", "M",
+            "M", "M", "F", "F", "M", "F", "F", "M", "M", "F", "M", "M", "M", "M")
+
+shoesize <- data.frame(ShoeSize = S_Size, Height = Height, Gender = Gender)
+write.csv(shoesize, "shoesize.csv", row.names = FALSE)
+
+# 1b. Read CSV file back into R environment and display last 5 rows
+shoe <- read.csv("shoesize.csv")
+tail(shoe, 5)
+
+# 1c. Describe data structure and content
+str(shoe)
+
+# 1d. Inspect dimensions (rows and columns)
+dim(shoe)
+nrow(shoe)
+ncol(shoe)
+
+# 1e. Summary statistics
+summary(shoe)
+```
+
+```{r}
+# 1f. Create subsets by gender showing shoe size and height
+males   <- shoe[shoe$Gender == "M", c("ShoeSize", "Height")]
+females <- shoe[shoe$Gender == "F", c("ShoeSize", "Height")]
+
+males
+females
+
+# 1g. Find overall mean of shoe size and height
+mean(shoe$ShoeSize)
+mean(shoe$Height)
+```
+
+Relationship between shoe size and height:
+
+Yes, there is a positive relationship—taller individuals generally tend to have larger shoe sizes.
+
+### Part B — Nominal Factors and Markdown Reproducibility
+Question #2
+
+Create factors for gender:
+```{r}
+shoe$Gender_Factor <- factor(shoe$Gender, levels = c("F", "M"), labels = c("Female", "Male"))
+shoe$Gender_Factor
+```
+
+Question #3
+
+Why knitting from the .Rmd directory makes imports reproducible:
+
+Knitting sets the document's folder as the working directory, ensuring relative file paths (like "shoesize.csv") resolve consistently on any machine without relying on hardcoded computer-specific file paths.
+
+Question #4
+
+Type assigned to Gender and consequences of stray text in numeric columns:
+
+str(shoe) shows Gender as character text. If a numeric column like ShoeSize contains stray text, R imports the whole column as character, breaking mathematical functions like mean() and cor() unless cleaned and converted.
+
+Question #5
+
+Why checking both head() and tail() is necessary:
+
+head() only displays top rows. Checking tail() ensures the dataset imported completely without trailing blank rows, broken footers, or malformed end values.
+
+### Part C — Subsetting & Correlation Analysis
+```{r}
+# 6a. Compute correlation between shoe size and height across all observations
+cor(shoe$ShoeSize, shoe$Height)
+
+# 6b. Return all rows where ShoeSize is >= 11
+shoe[shoe$ShoeSize >= 11, ]
+```
+
+```{r}
+# Subgroup means comparison for Question 7
+mean(females$Height)
+mean(males$Height)
+mean(females$ShoeSize)
+mean(males$ShoeSize)
+```
+
+Question #7
+
+Pattern in subgroup means and accounting for gender:
+
+Male respondents show higher average height and shoe size compared to females. Because gender strongly influences both physical variables, gender must be accounted for as an underlying factor when evaluating the relationship between height and shoe size.
