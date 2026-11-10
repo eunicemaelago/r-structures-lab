@@ -1,0 +1,122 @@
+---
+title: "R Lab: Basic Operations - sort(), rank(), and order()"
+author: "Eunice Mae A. Lago"
+date: "2026-11-09"
+output: html_document
+---
+
+### Part A — Creating, Sorting, and Indexing Data
+```{r}
+# 1a. Create named vector of student scores
+scores <- c("Ana" = 78, "Ben" = 92, "Cid" = 85, "Dex" = 92, "Eli" = 67, "Fay" = 88, "Gio" = 74)
+scores
+
+# 1b. Sort scores in ascending and descending order
+sort(scores)
+sort(scores, decreasing = TRUE)
+
+# 1c. Print sorted scores to verify names stayed attached
+print(sort(scores))
+
+# 1d. Create additional vectors: subjects and incomplete
+subjects <- c("Science", "Math", "English", "Filipino", "PE")
+incomplete <- c(85, NA, 90, 70, NA, 95)
+
+# 1e. Sort subjects alphabetically
+sort(subjects)
+
+# 1f. Sort incomplete with na.last = TRUE so NAs appear at the end
+sort(incomplete, na.last = TRUE)
+```
+Question #2
+
+Names staying attached during sort and why it matters:
+
+Yes, names stayed attached because the values were defined as a named vector. If names detached during sorting, scores would be assigned to the wrong students, misidentifying top and bottom performers.
+
+Question #3
+
+Danger of sort() silently omitting NA values:
+
+By default, sort() drops NA values without warning. If missing scores were lower than recorded ones, reporting the default minimum would give a false lowest score.
+
+### Part B — Comparing sort() vs order()
+```{r}
+# Display raw order indices vs sorted values
+order(scores)
+sort(scores)
+
+# Indexing scores with order(scores)
+scores[order(scores)]
+```
+Question #4
+
+Difference between order(scores) and sort(scores):
+
+sort(scores) returns the actual data values rearranged in order. order(scores) returns the original index positions needed to achieve sorted order. Indexing scores[order(scores)] yields the exact same output as sort(scores) because it retrieves elements by those ordered positions.
+
+### Part C — Sorting Data Frames with order()
+```{r}
+# 5a. Create the students data frame
+students <- data.frame(
+  name = c("Ana", "Ben", "Cid", "Dex", "Eli", "Fay", "Gio"),
+  score = c(78, 92, 85, 92, 67, 88, 74),
+  section = c("A", "B", "A", "B", "A", "B", "A")
+)
+students
+
+# 5b. Reorder students data frame by score (ascending)
+students[order(students$score), ]
+
+# 5c. Reorder students data frame by score (descending)
+students[order(-students$score), ]
+```
+
+Question #6
+
+What order(scores) returns and why it requires indexing:
+
+order(scores) returns raw index numbers representing row positions. On its own, it is just a list of position numbers; it becomes useful only when passed into index brackets [ ] to reorder vectors or entire data frame rows.
+
+Question #7
+
+Why sort() cannot reorder a data frame while order() can:
+
+sort() extracts and rearranges a single vector, losing row associations. order() returns positional indices, allowing df[order(...), ] to move entire rows together so all columns stay aligned.
+
+### Part D — Ranking Data and Handling Ties
+```{r}
+# 8a. Compute rank of scores and display side-by-side
+rank(scores)
+cbind(scores, rank = rank(scores))
+
+# Display ranks specifically for Ben and Dex
+rank(scores)[c("Ben", "Dex")]
+```
+
+Question #8
+
+Tied ranks for Ben and Dex:
+
+Ben and Dex both receive a rank of 6.5. They share the 6th and 7th highest score positions (92). R's default rank() computes the average of tied positions (6 + 7) / 2 = 6.5 to treat tied observations fairly.
+
+### Part E — Sales Ranking Challenge
+```{r}
+# 9a. Create sales data frame and add rank column (top seller = rank 1)
+sales <- data.frame(
+  employee = c("Rey", "Sam", "Tin", "Uma", "Val"),
+  units_sold = c(120, 145, 145, 98, 130)
+)
+
+sales$rank <- rank(-sales$units_sold)
+sales
+
+# 9b. Reorder sales data frame from HIGHEST to LOWEST units_sold
+sales[order(-sales$units_sold), ]
+```
+
+Question #9
+
+Why order() alone cannot replace rank() for tied standings:
+
+order() breaks ties arbitrarily to output a strict sequence of unique row positions. It lacks tie-handling logic, whereas rank() identifies identical values and assigns them equal numerical standings.
