@@ -1,0 +1,117 @@
+---
+title: "R Lab: Data Structures - Data Frames"
+author: "Eunice Mae A. Lago"
+date: "2026-11-06"
+output: html_document
+---
+
+### Part A — Creating Data Frames
+```{r}
+# 1a. Vector definitions and length verification
+respond <- 1:20
+sex <- c(2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2)
+f_occ <- c(1, 3, 3, 3, 1, 2, 3, 1, 1, 1, 3, 2, 1, 3, 3, 1, 3, 1, 2, 1)
+p_home <- c(5, 7, 3, 8, 5, 9, 6, 7, 8, 4, 7, 5, 4, 7, 8, 8, 3, 11, 7, 6)
+s_school <- c(6, 4, 4, 1, 2, 1, 5, 3, 1, 2, 3, 2, 5, 5, 2, 1, 2, 5, 3, 2)
+h_type <- c(1, 2, 3, 1, 1, 3, 3, 1, 2, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 2)
+
+# Verify all vectors have length 20
+c(length(respond), length(sex), length(f_occ), length(p_home), length(s_school), length(h_type))
+```
+```{r}
+# 1b. Create the data frame 'survey' with exact specified column names
+survey <- data.frame(
+  Respondent = respond,
+  Sex = sex,
+  FathersOccupation = f_occ,
+  PersonsAtHome = p_home,
+  SiblingsAtSchool = s_school,
+  TypesOfHouses = h_type
+)
+
+survey
+```
+
+```{r}
+# 2. Structure and summary of survey data
+str(survey)
+summary(survey)
+```
+
+```{r}
+# 4. Create factor variables with descriptive labels
+survey$Sex_Factor <- factor(survey$Sex, levels = c(1, 2), labels = c("Male", "Female"))
+survey$FathersOccupation_Factor <- factor(survey$FathersOccupation, levels = c(1, 2, 3), labels = c("Farmer", "Driver", "Others"))
+survey$TypesOfHouses_Factor <- factor(survey$TypesOfHouses, levels = c(1, 2, 3), labels = c("Wood", "Semi-Concrete", "Concrete"))
+
+# Display frequency tables for factor columns
+table(survey$Sex_Factor)
+table(survey$FathersOccupation_Factor)
+table(survey$TypesOfHouses_Factor)
+```
+
+```{r}
+# 5. Compute column means for numeric variables
+colMeans(survey[, 1:6])
+```
+
+```{r}
+# 6. Extract the first 5 rows across all columns
+survey[1:5, ]
+```
+
+```{r}
+# 7. Select TypesOfHouses and store as vector types_houses
+types_houses <- survey$TypesOfHouses
+types_houses
+```
+
+```{r}
+# 8. Select Male respondents whose father is a farmer
+survey[survey$Sex == 1 & survey$FathersOccupation == 1, ]
+```
+
+```{r}
+# 9. Select Female respondents with >= 5 siblings attending school
+survey[survey$Sex == 2 & survey$SiblingsAtSchool >= 5, ]
+```
+
+Question #2
+
+Why checking vector lengths is necessary before creating a data frame:
+
+In survey data, each index position across vectors represents a single respondent's answers. Equal vector lengths ensure that attributes align correctly per row without throwing errors or causing row shifts.
+
+Question #3
+
+Nominal categories vs. actual counts, and why averaging Sex is misleading:
+
+Sex, FathersOccupation, and TypesOfHouses are nominal categories coded as arbitrary numbers. PersonsAtHome and SiblingsAtSchool are actual numerical counts. Averaging numeric codes like Sex produces a meaningless number (e.g., 1.85) that does not represent an actual quantity or group label.
+
+Question #4
+
+Misinterpretation of raw numeric codes and working with unlabeled data:
+
+Without the legend, someone seeing Sex == 1 cannot tell if 1 stands for Male, Female, or another category. This illustrates that raw numeric codes lack inherent semantic meaning, making labeling with factors essential for clear interpretation.
+
+Question #5
+
+Number of Male respondents and sample size generalizability:
+
+```{r}
+sum(survey$Sex == 1)
+```
+
+There are only 3 Male respondents (Sex == 1). With such a small sample size, individual variations heavily skew percentages, making it unreliable to generalize patterns from this dataset to a larger population.
+
+Question #6
+
+Why summary() defaults to numeric statistics on coded data:
+
+R generates summaries based on how data is stored, not what it represents. Because columns were entered as plain numeric vectors, R computes numeric statistics by default. This highlights the gap between computational data storage types and real-world semantic data types.
+
+Question #7
+
+Comparing the means of PersonsAtHome and Sex:
+
+The mean of PersonsAtHome (approx. 6.15) is meaningful because it represents the average number of household members. The mean of Sex (1.85) is meaningless because Sex is a categorical label; categorical variables should be summarized using counts or proportions instead.
