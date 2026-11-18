@@ -1,0 +1,2 @@
+"0","sorted_students <- students_all[order(-students_all$average), ]"
+"0","head(sorted_students, 3)"

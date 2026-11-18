@@ -1,0 +1,4 @@
+"0","quiz <- c(8, 7, 10, 6, 7, 9, 10, 5, 8, 6)"
+"0",""
+"0","students_all <- cbind(students_all, quiz = quiz)"
+"0","students_all"

@@ -1,0 +1,11 @@
+"0","bad <- data.frame(wrong_name = 1, wrong_score = 2)"
+"0",""
+"0","tryCatch("
+"0","  rbind(students, bad), "
+"0","  error = function(e) {"
+"0","    message(""rbind failed: "", conditionMessage(e))"
+"0","    NULL"
+"0","  }"
+"0",")"
+"1","NULL
+"

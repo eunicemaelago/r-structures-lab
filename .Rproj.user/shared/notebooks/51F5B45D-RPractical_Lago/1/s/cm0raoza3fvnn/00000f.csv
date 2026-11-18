@@ -1,0 +1,2 @@
+"0","students$average <- round(rowMeans(students[, c(""midterm"", ""final"")]), 1)"
+"0","students"

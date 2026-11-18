@@ -1,0 +1,5 @@
+"0","subset("
+"0","  students_all, "
+"0","  sex == ""F"" & (section == ""A"" | section == ""C"") & final >= 75,"
+"0","  select = c(""name"", ""section"", ""final"")"
+"0",")"

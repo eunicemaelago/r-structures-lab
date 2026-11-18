@@ -1,0 +1,3 @@
+"0","students$standing <- ifelse(students$average >= 90, ""Honors"","
+"0","                     ifelse(students$average >= 75, ""Good"", ""Needs Support""))"
+"0","students"

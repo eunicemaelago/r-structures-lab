@@ -1,0 +1,2 @@
+"0","by_salary <- emp_all[order(-emp_all$salary), ]"
+"0","by_salary[1:5, c(""name"", ""department"", ""salary"")]"
