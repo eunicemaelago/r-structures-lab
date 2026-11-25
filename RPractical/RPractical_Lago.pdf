@@ -2,7 +2,7 @@
 title: "R Programming Practical Examination"
 author: "Eunice Mae A. Lago"
 date: "2026-11-11"
-output: html_document
+output: pdf_document
 ---
 
 ### Part A: Basic Operations
